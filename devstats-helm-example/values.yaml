@@ -1,5 +1,5 @@
 # ARTWORK
-# Secrets that can be set via files in `./secrets/*.secret`, via coommand line by `--set 'pgAdminUser=xyz,pgHost=host.com,...'` or even uncomment them in the lines below.
+# Secrets that can be set via files in `./secrets/*.secret`, via command line by `--set 'pgAdminUser=xyz,pgHost=host.com,...'` or even uncomment them in the lines below.
 # pgAdminUser: ''
 # pgHost: ''
 # pgPort: ''
