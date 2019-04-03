@@ -60,12 +60,6 @@ spec:
       value: '{{ $root.Values.waitForBootstrap }}'
     - name: GHA2DB_NCPUS
       value: '{{ $root.Values.nCPUs }}'
-    - name: GHA2DB_USE_ES
-      value: '{{ $root.Values.useES }}'
-    - name: GHA2DB_USE_ES_RAW
-      value: '{{ $root.Values.useESRaw }}'
-    - name: GHA2DB_ES_BULK_SIZE
-      value: '{{ $root.Values.esBulkSize }}'
     - name: GHA2DB_DEBUG
       value: '{{ $root.Values.debug }}'
     - name: GHA2DB_CMDDEBUG
@@ -95,21 +89,6 @@ spec:
         secretKeyRef:
           name: {{ $root.Values.oauthSecret }}
           key: GHA2DB_GITHUB_OAUTH.secret
-    - name: ES_PORT
-      valueFrom:
-        secretKeyRef:
-          name: {{ $root.Values.esSecret }}
-          key: ES_PORT.secret
-    - name: ES_HOST
-      valueFrom:
-        secretKeyRef:
-          name: {{ $root.Values.esSecret }}
-          key: ES_HOST.secret
-    - name: ES_PROTO
-      valueFrom:
-        secretKeyRef:
-          name: {{ $root.Values.esSecret }}
-          key: ES_PROTO.secret
     - name: PG_HOST
       valueFrom:
         secretKeyRef:

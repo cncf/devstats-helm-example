@@ -11,8 +11,8 @@ metadata:
 {{- with .Values.labels -}}
 {{ toYaml . | nindent 4 }}
 {{ end }}
-    app.kubernetes.io/name: {{ include "devstats-helm.name" . }}
-    helm.sh/chart: {{ include "devstats-helm.chart" . }}
+    app.kubernetes.io/name: {{ include "devstats-helm-example.name" . }}
+    helm.sh/chart: {{ include "devstats-helm-examples.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
@@ -57,12 +57,6 @@ spec:
       value: '{{ .Values.bootstrapNoCreate }}'
     - name: GHA2DB_NCPUS
       value: '{{ .Values.nCPUs }}'
-    - name: GHA2DB_ES_BULK_SIZE
-      value: '{{ .Values.esBulkSize }}'
-    - name: GHA2DB_USE_ES
-      value: '{{ .Values.useES }}'
-    - name: GHA2DB_USE_ES_RAW
-      value: '{{ .Values.useESRaw }}'
     - name: GHA2DB_DEBUG
       value: '{{ .Values.debug }}'
     - name: GHA2DB_CMDDEBUG
@@ -92,21 +86,6 @@ spec:
         secretKeyRef:
           name: {{ .Values.oauthSecret }}
           key: GHA2DB_GITHUB_OAUTH.secret
-    - name: ES_PORT
-      valueFrom:
-        secretKeyRef:
-          name: {{ .Values.esSecret }}
-          key: ES_PORT.secret
-    - name: ES_HOST
-      valueFrom:
-        secretKeyRef:
-          name: {{ .Values.esSecret }}
-          key: ES_HOST.secret
-    - name: ES_PROTO
-      valueFrom:
-        secretKeyRef:
-          name: {{ .Values.esSecret }}
-          key: ES_PROTO.secret
     - name: PG_HOST
       valueFrom:
         secretKeyRef:

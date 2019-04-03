@@ -58,10 +58,6 @@ spec:
             env:
             - name: ONLY
               value: {{ .proj }}
-            - name: GHA2DB_USE_ES
-              value: '{{ $root.Values.useES }}'
-            - name: GHA2DB_USE_ES_RAW
-              value: '{{ $root.Values.useESRaw }}'
             - name: GHA2DB_PROPAGATE_ONLY_VAR
               value: "1"
             - name: GHA2DB_CHECK_PROVISION_FLAG
@@ -72,8 +68,6 @@ spec:
               value: "1"
             - name: GHA2DB_NCPUS
               value: '{{ $root.Values.nCPUs }}'
-            - name: GHA2DB_ES_BULK_SIZE
-              value: '{{ $root.Values.esBulkSize }}'
             - name: GHA2DB_DEBUG
               value: '{{ $root.Values.debug }}'
             - name: GHA2DB_CMDDEBUG
@@ -118,11 +112,6 @@ spec:
                 secretKeyRef:
                   name: {{ $root.Values.pgSecret }}
                   key: PG_PASS.secret
-            - name: GHA2DB_ES_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ $root.Values.esSecret }}
-                  key: GHA2DB_ES_URL.secret
             image: {{ $root.Values.syncImage }}
             imagePullPolicy: {{ $root.Values.imagePullPolicy }}
             name: '{{ $root.Values.syncPodName }}-{{ .proj }}'
