@@ -1,7 +1,9 @@
-# devstats-helm-lf
-DevStats Deployment on Kubernetes using Helm. This is a deployment for LF and CNCF projects
+# devstats-helm-example
 
-Helm chart in `devstats-helm`.
+DevStats Deployment on Kubernetes using Helm. This is an example deployment of a single project - CNCF organization.
+
+Helm chart in `devstats-helm-example`.
+
 
 # Usage
 
@@ -18,18 +20,14 @@ List of secrets:
 - File `secrets/PG_PASS.secret` or --set `pgPass=...` setup postgres password for the default user (gha_admin).
 - File `secrets/PG_PASS_RO.secret` or --set `pgPassRO=...` setup for the read-only user (ro_user).
 - File `secrets/PG_PASS_TEAM.secret` or --set `pgPassTeam=...` setup the team user (also read-only) (devstats_team).
-- File `secrets/ES_HOST.secret` or --set `esHost=...` setup Elastic Search host name.
-- File `secrets/ES_PORT.secret` or --set `esPort=...` setup Elastic Search port.
-- File `secrets/ES_PROTO.secret` or --set `esProto=...` setup Elasting Search protocol (http or https).
-- File `secrets/GHA2DB_ES_URL.secret` or --set `esURL=...` setup full Elastic Search URL.
 - File `secrets/GHA2DB_GITHUB_OAUTH.secret` or --set `githubOAuth=...` setup GitHub OAuth token(s) (single value or comma separated list of tokens).
 - File `secrets/GF_SECURITY_ADMIN_USER.secret` or --set `grafanaUser=...` setup Grafana admin user name.
 - File `secrets/GF_SECURITY_ADMIN_PASSWORD.secret` or --set `grafanaPassword=...` setup Grafana admin user password.
 
-You can select which secret(s) should be skipped via: `--set skipPGSecret=1,skipESSecret=1,skipGitHubSecret=1,skipGrafanaSecret=1`.
+You can select which secret(s) should be skipped via: `--set skipPGSecret=1,skipGitHubSecret=1,skipGrafanaSecret=1`.
 
 You can install only selected templates, see `values.yaml` for detalis (refer to `skipXYZ` variables in comments), example:
-- `helm install --dry-run --debug ./devstats-helm --set skipSecrets=1,skipPV=1,skipBootstrap=1,skipProvisions=1,skipCrons=1,skipGrafanas=1,skipServices=1`.
+- `helm install --dry-run --debug ./devstats-helm-example --set skipSecrets=1,skipPV=1,skipBootstrap=1,skipProvisions=1,skipCrons=1,skipGrafanas=1,skipServices=1`.
 
 You can restrict ranges of projects provisioned and/or range of cron jobs to create via:
 - `--set indexProvisionsFrom=5,indexProvisionsTo=9,indexCronsFrom=5,indexCronsTo=9,indexGrafanasFrom=5,indexGrafanasTo=9,indexServicesFrom=5,indexServicesTo=9`.
@@ -37,4 +35,4 @@ You can restrict ranges of projects provisioned and/or range of cron jobs to cre
 You can overwrite the number of CPUs autodetected in each pod, setting this to 1 will make each pod single-threaded
 - `--set nCPUs=1`.
 
-Please note variables commented out in `./devstats-helm/values.yaml`. You can either uncomment them or pass their values via `--set variable=name`.
+Please note variables commented out in `./devstats-helm-example/values.yaml`. You can either uncomment them or pass their values via `--set variable=name`.
