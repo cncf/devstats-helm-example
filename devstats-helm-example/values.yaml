@@ -52,6 +52,10 @@
 # queryOut: 1
 # reposDir: "/root/devstats_repos/"
 # skipMetrics: 'users_activity,committers_cum'
+# https://itnext.io/efs-persistent-volumes-on-aws-kubernetes-193e0035bbfb
+# storageAccessModes: ReadWriteMany
+# storageClass: efs
+# storageSize: 200Gi
 # syncCommandArgs:
 #   - "syncarg"
 affiliations: 'github_users.json'
@@ -109,9 +113,9 @@ requestsProvisionsMemory: '2Gi'
 secretType: Opaque
 servicePodName: devstats-service
 serviceType: LoadBalancer
-storageAccessModes: ReadWriteMany
-storageClass: efs
-storageSize: 200Gi
+storageAccessModes: ReadWriteOnce
+storageClass: gp2
+storageSize: 100Gi
 syncCommand: devstats
 syncImage: 'lukaszgryglicki/devstats-minimal'
 syncPodName: devstats
