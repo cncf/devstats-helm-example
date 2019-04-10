@@ -36,3 +36,26 @@ You can overwrite the number of CPUs autodetected in each pod, setting this to 1
 - `--set nCPUs=1`.
 
 Please note variables commented out in `./devstats-helm-example/values.yaml`. You can either uncomment them or pass their values via `--set variable=name`.
+
+# EKS cluster
+
+If you want to use EKS cluster, there are some shell scripts in `scripts` directory that can be useful:
+
+- `cncfekscluster.sh` - can be used to create EKS cluster, it uses [eksctl](https://eksctl.io).
+- `cncfkubectl.sh` - once cluster is up and running you can use it as `kubectl` - it is configured to use cluster created by `cncfekscluster.sh`.
+- `cncfec2desc.sh` - you can use it to list `EC2` instances created by `cncfekscluster.sh`.
+
+Before using any of those script you need to define `cncf` AWS profile by modifying files in `~/.aws/` directory:
+
+- `config` (example):
+```
+[profile cncf]
+region = eu-west-3
+output = json
+```
+- `credentials` (example redacted):
+```
+[cncf]
+aws_secret_access_key = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+aws_access_key_id = yyyyyyyyyyyyyyyyyy
+```
