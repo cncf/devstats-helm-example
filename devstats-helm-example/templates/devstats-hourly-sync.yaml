@@ -116,12 +116,12 @@ spec:
             imagePullPolicy: {{ $root.Values.imagePullPolicy }}
             name: '{{ $root.Values.syncPodName }}-{{ .proj }}'
             volumeMounts:
-            - name: {{ $root.Values.volumeMountName }}
+            - name: '{{ $root.Values.volumeMountName }}-{{ .proj }}'
               mountPath: '{{ $root.Values.volumeMountPath }}'
           volumes:
-          - name: {{ $root.Values.volumeName }}
+          - name: '{{ $root.Values.volumeName }}-{{ .proj }}'
             persistentVolumeClaim:
-              claimName: {{ $root.Values.pvName }}
+              claimName: '{{ $root.Values.pvName }}-{{ .proj }}'
           restartPolicy: {{ $root.Values.syncRestartPolicy }}
           nodeSelector:
 {{- with $root.Values.nodeSelector -}}

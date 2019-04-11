@@ -119,13 +119,6 @@ spec:
     image: {{ .Values.proivisionImage }}
     imagePullPolicy: {{ .Values.imagePullPolicy }}
     name: {{ .Values.bootstrapPodName }}
-    volumeMounts:
-    - name: {{ .Values.volumeMountName }}
-      mountPath: '{{ .Values.volumeMountPath }}'
-  volumes:
-  - name: {{ .Values.volumeName }}
-    persistentVolumeClaim:
-      claimName: {{ .Values.pvName }}
   restartPolicy: {{ .Values.bootstrapRestartPolicy }}
   nodeSelector:
 {{- with .Values.nodeSelector -}}
