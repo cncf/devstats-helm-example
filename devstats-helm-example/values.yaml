@@ -55,7 +55,6 @@
 # https://itnext.io/efs-persistent-volumes-on-aws-kubernetes-193e0035bbfb
 # storageAccessModes: ReadWriteMany
 # storageClass: efs
-# storageSize: 200Gi
 # syncCommandArgs:
 #   - "syncarg"
 affiliations: 'github_users.json'
@@ -115,7 +114,6 @@ servicePodName: devstats-service
 serviceType: LoadBalancer
 storageAccessModes: ReadWriteOnce
 storageClass: gp2
-storageSize: 100Gi
 syncCommand: devstats
 syncImage: 'lukaszgryglicki/devstats-minimal'
 syncPodName: devstats
@@ -137,4 +135,5 @@ projects:
     org: 'CNCF'
     repo: 'cncf/landscape'
     cron: '7 * * * *'
+    disk: 30Gi
     i: 0
