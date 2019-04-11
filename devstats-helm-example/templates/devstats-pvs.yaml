@@ -1,26 +1,31 @@
-{{- $skipPV := .Values.skipPV -}}
-{{ if not $skipPV }}
+{{- $skipPVs := .Values.skipPVs -}}
+{{ if not $skipPVs }}
+{{- $root := . -}}
+{{- range $index, $_ := .Values.projects -}}
+{{- if and (or (eq ($index|int) ($root.Values.indexPVsFrom|int)) (gt ($index|int) ($root.Values.indexPVsFrom|int))) (lt ($index|int) ($root.Values.indexPVsTo|int)) -}}
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ .Values.pvName }}
+  name: '{{ $root.Values.pvName }}-{{ .proj }}'
   labels:
     type: 'pvc'
-{{- with .Values.labels -}}
+{{- with $root.Values.labels -}}
 {{ toYaml . | nindent 4 }}
 {{ end }}
-    app.kubernetes.io/name: {{ include "devstats-helm-example.name" . }}
-    helm.sh/chart: {{ include "devstats-helm-example.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ $root.Chart.Name }}
+    helm.sh/chart: {{ printf "%s-%s" $root.Chart.Name $root.Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/instance: {{ $root.Release.Name }}
+    app.kubernetes.io/managed-by: {{ $root.Release.Service }}
   annotations:
-    volume.beta.kubernetes.io/storage-class: {{ .Values.storageClass }}
+    volume.beta.kubernetes.io/storage-class: {{ $root.Values.storageClass }}
 spec:
-  storageClassName: {{ .Values.storageClass }}
+  storageClassName: {{ $root.Values.storageClass }}
   accessModes:
-    - {{ .Values.storageAccessModes }}
+    - {{ $root.Values.storageAccessModes }}
   resources:
     requests:
-      storage: {{ .Values.storageSize }}
+      storage: {{ .disk }}
+{{ end }}
+{{ end }}
 {{ end }}

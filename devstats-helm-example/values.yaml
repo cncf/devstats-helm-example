@@ -14,14 +14,14 @@
 # skipBootstrap (will not run initial bootstrapping - creating logs and users, but you don't need to skip it - bootstrap pod detects already created resources)
 # skipCrons (will not create new cronjobs, you should set it when cron jobs are already created, if you want to recreate cron jobs, delete existing ones first and do not set this flag)
 # skipGrafanas (will not create Grafana deployments)
-# skipPV (will not attempt to create persistent volume claim, this is usually needed to avoid creating existing resource)
+# skipPVs (will not attempt to create persistent volume claims, this is usually needed to avoid creating existing resource)
 # skipProvisions (will not create provisioning pods, usually not needed, provisioning pod will detect already provisioned projects and only provision new ones)
 # skipSecrets (will not attempt to create secrets, if you want to create new secrets delete current secrets first and do not set this flag)
 # skipServices (will not attempt to create services (Load Balancers))
 # skipBootstrap: 1
 # skipCrons: 1
 # skipGrafanas: 1
-# skipPV: 1
+# skipPVs: 1
 # skipProvisions: 1
 # skipSecrets: 1
 # skipServices: 1
@@ -81,6 +81,8 @@ indexGrafanasFrom: 0
 indexGrafanasTo: 100
 indexProvisionsFrom: 0
 indexProvisionsTo: 100
+indexPVsFrom: 0
+indexPVsTo: 100
 indexServicesFrom: 0
 indexServicesTo: 100
 limitsBootstrapCPU: '2000m'
@@ -100,7 +102,7 @@ projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
-pvName: devstats-git
+pvName: devstats-pvc
 requestsBootstrapCPU: '500m'
 requestsBootstrapMemory: '1Gi'
 requestsCronsCPU: '1000m'
