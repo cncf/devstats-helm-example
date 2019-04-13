@@ -37,6 +37,8 @@ You can overwrite the number of CPUs autodetected in each pod, setting this to 1
 
 Please note variables commented out in `./devstats-helm-example/values.yaml`. You can either uncomment them or pass their values via `--set variable=name`.
 
+Resource types used: secret, pv, pvc, po, cronjob, deployment, svc
+
 # EKS cluster
 
 If you want to use EKS cluster, there are some shell scripts in `scripts` directory that can be useful:
