@@ -39,6 +39,12 @@ Please note variables commented out in `./devstats-helm-example/values.yaml`. Yo
 
 Resource types used: secret, pv, pvc, po, cronjob, deployment, svc
 
+To debug provisioning use:
+- `helm install ./devstats-helm-example --set skipSecrets=1,skipPVs=1,skipBootstrap=1,skipCrons=1,skipGrafanas=1,skipServices=1,indexProvisionsFrom=0,indexProvisionsTo=1,provisionCommand=sleep,provisionCommandArgs={36000s}`.
+- Bash into it: `github.com/cncf/devstats-k8s-lf`: `./util/pod_shell.sh devstats-provision-cncf`.
+- Then for example: `PG_USER=gha_admin db.sh psql cncf`.
+- Finally delete pod: `kubectl delete pod devstats-provision-cncf`.
+
 # EKS cluster
 
 If you want to use EKS cluster, there are some shell scripts in `scripts` directory that can be useful:

@@ -31,6 +31,9 @@
 #
 # Other evrironment options
 # bootstrapCommand: './example/repos.sh'
+# bootstrapCommand: './example/affs.sh'
+# bootstrapCommand: './example/clear_devstats_running_flag.sh'
+# bootstrapCommand: './example/set_provisioned_flag.sh'
 # bootstrapCommandArgs:
 #   - "36000"
 #   - "bootarg"
