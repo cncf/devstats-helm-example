@@ -58,6 +58,8 @@ spec:
       value: {{ .proj }}
     - name: WAITBOOT
       value: '{{ $root.Values.waitForBootstrap }}'
+    - name: GHA2DB_PROPAGATE_ONLY_VAR
+      value: "1"
     - name: GHA2DB_NCPUS
       value: '{{ $root.Values.nCPUs }}'
     - name: GHA2DB_DEBUG
