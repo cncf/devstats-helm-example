@@ -1,0 +1,21 @@
+{{- $skipPostgres := .Values.skipPostgres -}}
+{{ if not $skipPostgres }}
+{{- /*
+Placeholder service to keep the leader election endpoint from getting deleted during initial deployment.  Not useful for connecting to anything.
+*/ -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: '{{ .Values.postgresSvcName }}-config'
+  labels:
+    type: postgres
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    cluster-name: '{{ .Values.postgresSvcName }}'
+spec:
+  clusterIP: None
+
+{{ end }}

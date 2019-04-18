@@ -1,0 +1,20 @@
+{{- $skipPostgres := .Values.skipPostgres -}}
+{{ if not $skipPostgres }}
+{{- /*
+Endpoint for PostgreSQL master service.  On deploy, this does nothing; once spun up, the master pod will direct it to itself.
+*/ -}}
+---
+apiVersion: v1
+kind: Endpoint
+metadata:
+  name: '{{ .Values.postgresSvcName }}-config'
+  labels:
+    type: postgres
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    cluster-name: '{{ .Values.postgresSvcName }}'
+subsets: []
+
+{{ end }}
