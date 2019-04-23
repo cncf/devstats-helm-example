@@ -19,7 +19,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     cluster-name: '{{ .Values.postgresSvcName }}'
 spec:
-  replicas: '{{ .Values.postgresNodes }}'
+  replicas: {{ .Values.postgresNodes }}
   serviceName: '{{ .Values.postgresSvcName }}'
   template:
     metadata:

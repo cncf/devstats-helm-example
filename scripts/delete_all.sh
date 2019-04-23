@@ -1,0 +1,13 @@
+#!/bin/bash
+# Rememeber to set correct kubectl parameters, for example AWS_PROFILE and/or KUBECONFIG
+kubectl delete secret pg-db github-oauth grafana-secret
+../devstats-k8s-lf/util/delete_objects.sh cronjob 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh statefulset 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh service 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh deployment 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh endpoints 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh pod 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh pvc 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh rolebinding 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh role 'devstats-'
+../devstats-k8s-lf/util/delete_objects.sh serviceaccount 'devstats-'
