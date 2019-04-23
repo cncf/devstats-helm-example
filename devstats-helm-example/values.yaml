@@ -106,6 +106,9 @@ projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
+postgresSvcName: devstats-postgres
+postgresImageName: 'jberkus/simple-patroni:v3'
+postgresStorageSize: '10Gi'
 pvName: devstats-pvc
 requestsBootstrapCPU: '500m'
 requestsBootstrapMemory: '1Gi'

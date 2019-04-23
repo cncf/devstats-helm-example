@@ -1,0 +1,26 @@
+{{- $skipPostgres := .Values.skipPostgres -}}
+{{ if not $skipPostgres }}
+{{- /*
+Service for read/write connections, that is connections to the master node.
+*/ -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: '{{ .Values.postgresSvcName }}'
+  labels:
+    type: postgres
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    cluster-name: '{{ .Values.postgresSvcName }}'
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: postgresql
+protocol: TCP
+
+{{ end }}

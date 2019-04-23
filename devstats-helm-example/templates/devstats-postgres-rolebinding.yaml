@@ -1,0 +1,26 @@
+{{- $skipPostgres := .Values.skipPostgres -}}
+{{ if not $skipPostgres }}
+{{- /*
+Postgres RBAC role.  Required for the deployed postgres pods to have control over configmaps, endpoint and services required to control leader election and failover.
+*/ -}}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: '{{ .Values.postgresSvcName }}'
+  labels:
+    type: postgres
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    cluster-name: '{{ .Values.postgresSvcName }}'
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: '{{ .Values.postgresSvcName }}'
+subjects:
+- kind: ServiceAccount
+  name: '{{ .Values.postgresSvcName }}'
+
+{{ end }}
