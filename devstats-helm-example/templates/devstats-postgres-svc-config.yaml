@@ -1,7 +1,9 @@
 {{- $skipPostgres := .Values.skipPostgres -}}
 {{ if not $skipPostgres }}
 {{- /*
-Placeholder service to keep the leader election endpoint from getting deleted during initial deployment.  Not useful for connecting to anything.
+Placeholder service to keep the leader election endpoint
+from getting deleted during initial deployment.
+Not useful for connecting to anything.
 */ -}}
 ---
 apiVersion: v1
@@ -17,5 +19,4 @@ metadata:
     cluster-name: '{{ .Values.postgresSvcName }}'
 spec:
   clusterIP: None
-
 {{ end }}

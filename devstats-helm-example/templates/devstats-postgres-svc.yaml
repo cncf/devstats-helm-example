@@ -22,5 +22,4 @@ spec:
     port: 5432
     targetPort: postgresql
 protocol: TCP
-
 {{ end }}
