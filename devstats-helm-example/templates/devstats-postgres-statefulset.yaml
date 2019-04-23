@@ -43,6 +43,8 @@ spec:
         app.kubernetes.io/managed-by: {{ .Release.Service }}
         cluster-name: '{{ .Values.postgresSvcName }}'
     spec:
+      securityContext:
+        fsGroup: 999
       serviceAccountName: '{{ .Values.postgresSvcName }}'
       containers:
       - name: '{{ .Values.postgresSvcName }}'
