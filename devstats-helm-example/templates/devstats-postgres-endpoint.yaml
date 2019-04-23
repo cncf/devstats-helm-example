@@ -11,9 +11,12 @@ metadata:
   name: '{{ .Values.postgresSvcName }}-config'
   labels:
     type: postgres
+{{- with .Values.labels -}}
+{{ toYaml . | nindent 4 }}
+{{ end }}
     app.kubernetes.io/name: {{ .Chart.Name }}
-    helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    # helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+    # app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     cluster-name: '{{ .Values.postgresSvcName }}'
 subsets: []

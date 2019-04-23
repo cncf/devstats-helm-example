@@ -12,8 +12,8 @@ metadata:
 {{ toYaml . | nindent 4 }}
 {{ end }}
     app.kubernetes.io/name: {{ include "devstats-helm-example.name" . }}
-    helm.sh/chart: {{ include "devstats-helm-examples.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    # helm.sh/chart: {{ include "devstats-helm-examples.chart" . }}
+    # app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   containers:

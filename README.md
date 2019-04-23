@@ -11,11 +11,12 @@ You should set namespace to 'devstats' first: `./switch_namespace.sh devstats`.
 
 Please provide secret values for each file in `./secrets/*.secret.example` saving it as `./secrets/*.secret` or specify them from the command line.
 
-Please note that `vi` automatically adds new line to all text files, to remove it run `truncate -s -1` on a saved file.
+Please note that `vim` automatically adds new line to all text files, to remove it run `truncate -s -1` on a saved file.
 
 List of secrets:
 - File `secrets/PG_ADMIN_USER.secret` or --set `pgAdminUser=...` setup postgres admin user name.
 - File `secrets/PG_HOST.secret` or --set `pgHost=...` setup postgres host name.
+- File `secrets/PG_HOST_RO.secret` or --set `pgHostRO=...` setup postgres host name (read-only).
 - File `secrets/PG_PASS.secret` or --set `pgPass=...` setup postgres password for the default user (gha_admin).
 - File `secrets/PG_PASS_RO.secret` or --set `pgPassRO=...` setup for the read-only user (ro_user).
 - File `secrets/PG_PASS_TEAM.secret` or --set `pgPassTeam=...` setup the team user (also read-only) (devstats_team).
