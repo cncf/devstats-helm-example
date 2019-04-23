@@ -78,6 +78,10 @@ spec:
         - mountPath: /home/postgres/pgdata
           name: pgdata
         env:
+        - name: PATRONI_KUBERNETES_POD_IP # FIXME: guess
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
         - name: POD_IP
           valueFrom:
             fieldRef:
