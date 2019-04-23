@@ -11,38 +11,17 @@ metadata:
   labels:
     type: 'grafana'
     proj: {{ .proj }}
-{{- with $root.Values.labels -}}
-{{ toYaml . | nindent 4 }}
-{{ end }}
-    app.kubernetes.io/name: {{ $root.Chart.Name }}
-    # helm.sh/chart: {{ printf "%s-%s" $root.Chart.Name $root.Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-    # app.kubernetes.io/instance: {{ $root.Release.Name }}
-    app.kubernetes.io/managed-by: {{ $root.Release.Service }}
 spec:
   replicas: {{ $root.Values.grafanaNReplicas }}
   selector:
     matchLabels:
       type: 'grafana'
       proj: {{ .proj }}
-{{- with $root.Values.labels -}}
-{{ toYaml . | nindent 6 }}
-{{ end }}
-      app.kubernetes.io/name: {{ $root.Chart.Name }}
-      # helm.sh/chart: {{ printf "%s-%s" $root.Chart.Name $root.Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-      # app.kubernetes.io/instance: {{ $root.Release.Name }}
-      app.kubernetes.io/managed-by: {{ $root.Release.Service }}
   template:
     metadata:
       labels:
         type: 'grafana'
         proj: {{ .proj }}
-{{- with $root.Values.labels -}}
-{{ toYaml . | nindent 8 }}
-{{ end }}
-        app.kubernetes.io/name: {{ $root.Chart.Name }}
-        # helm.sh/chart: {{ printf "%s-%s" $root.Chart.Name $root.Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-        # app.kubernetes.io/instance: {{ $root.Release.Name }}
-        app.kubernetes.io/managed-by: {{ $root.Release.Service }}
     spec:
       containers:
       - command:

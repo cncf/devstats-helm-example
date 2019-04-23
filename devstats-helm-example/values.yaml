@@ -146,9 +146,6 @@ useGrafanasResourcesLimits: 1
 useProvisionsResourcesLimits: 1
 usePostgresResourcesLimits: 1
 waitForBootstrap: 30
-labels:
-  name: devstats
-labelsStr: 'name: devstats'
 projects:
   - proj: cncf
     db: cncf

@@ -10,24 +10,11 @@ metadata:
   name: '{{ .Values.postgresSvcName }}'
   labels:
     type: postgres
-{{- with .Values.labels -}}
-{{ toYaml . | nindent 4 }}
-{{ end }}
-    app.kubernetes.io/name: {{ .Chart.Name }}
-    # helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-    # app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
     cluster-name: '{{ .Values.postgresSvcName }}'
 spec:
   selector:
     matchLabels:
       type: postgres
-{{- with .Values.labels -}}
-{{ toYaml . | nindent 6 }}
-{{ end }}
-      app.kubernetes.io/name: {{ .Chart.Name }}
-      # app.kubernetes.io/instance: {{ .Release.Name }}
-      app.kubernetes.io/managed-by: {{ .Release.Service }}
       cluster-name: '{{ .Values.postgresSvcName }}'
   replicas: {{ .Values.postgresNodes }}
   serviceName: '{{ .Values.postgresSvcName }}'
@@ -35,12 +22,6 @@ spec:
     metadata:
       labels:
         type: postgres
-{{- with .Values.labels -}}
-{{ toYaml . | nindent 8 }}
-{{ end }}
-        app.kubernetes.io/name: {{ .Chart.Name }}
-        # app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/managed-by: {{ .Release.Service }}
         cluster-name: '{{ .Values.postgresSvcName }}'
     spec:
       securityContext:
@@ -91,7 +72,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: PATRONI_KUBERNETES_LABELS
-          value: "{type: postgres, {{ .Values.labelsStr }}, cluster-name: {{ .Values.postgresSvcName }}, app.kubernetes.io/name: {{ .Chart.Name }}, app.kubernetes.io/managed-by: {{ .Release.Service }}}"
+          value: '{"type": "postgres", "cluster-name": "{{ .Values.postgresSvcName }}"}'
         - name: PATRONI_KUBERNETES_PORTS
           value: '{[{"name": "postgresql", "port": 5432}]}'
         - name: PATRONI_SUPERUSER_USERNAME
