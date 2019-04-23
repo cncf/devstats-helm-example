@@ -92,6 +92,8 @@ spec:
               fieldPath: metadata.namespace
         - name: PATRONI_KUBERNETES_LABELS
           value: "{type: postgres, {{ .Values.labelsStr }}, cluster-name: {{ .Values.postgresSvcName }}, app.kubernetes.io/name: {{ .Chart.Name }}, app.kubernetes.io/managed-by: {{ .Release.Service }}}"
+        - name: PATRONI_KUBERNETES_PORTS
+          value: '{[{"name": "postgresql", "port": 5432}]}'
         - name: PATRONI_SUPERUSER_USERNAME
           valueFrom:
             secretKeyRef:
