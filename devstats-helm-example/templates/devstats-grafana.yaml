@@ -77,7 +77,7 @@ spec:
         - name: PG_DB
           value: {{ .db }}
         - name: PG_PORT
-          value: 5432
+          value: '5432'
         - name: PG_HOST
           valueFrom:
             secretKeyRef:

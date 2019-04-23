@@ -87,7 +87,7 @@ spec:
     - name: GHA2DB_FORCE_PERIODS
       value: '{{ $root.Values.periods }}'
     - name: PG_PORT
-      value: 5432
+      value: '5432'
     - name: GHA2DB_GITHUB_OAUTH
       valueFrom:
         secretKeyRef:

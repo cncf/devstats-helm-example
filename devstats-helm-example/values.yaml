@@ -139,6 +139,7 @@ useProvisionsResourcesLimits: 1
 waitForBootstrap: 30
 labels:
   name: devstats
+labelsStr: 'name: devstats'
 projects:
   - proj: cncf
     db: cncf

@@ -12,7 +12,7 @@ metadata:
 {{ toYaml . | nindent 4 }}
 {{ end }}
     app.kubernetes.io/name: {{ include "devstats-helm-example.name" . }}
-    # helm.sh/chart: {{ include "devstats-helm-examples.chart" . }}
+    # helm.sh/chart: {{ include "devstats-helm-example.chart" . }}
     # app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
@@ -82,7 +82,7 @@ spec:
     - name: GHA2DB_FORCE_PERIODS
       value: '{{ .Values.periods }}'
     - name: PG_PORT
-      value: 5432
+      value: '5432'
     - name: GHA2DB_GITHUB_OAUTH
       valueFrom:
         secretKeyRef:

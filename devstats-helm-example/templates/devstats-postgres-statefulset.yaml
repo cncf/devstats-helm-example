@@ -66,9 +66,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: PATRONI_KUBERNETES_LABELS
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels
+          value: "{type: postgres, {{ .Values.labelsStr }}, cluster-name: {{ .Values.postgresSvcName }}, app.kubernetes.io/name: {{ .Chart.Name }}, app.kubernetes.io/managed-by: {{ .Release.Service }}}"
         - name: PATRONI_SUPERUSER_USERNAME
           valueFrom:
             secretKeyRef:

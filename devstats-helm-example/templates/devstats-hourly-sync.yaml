@@ -93,7 +93,7 @@ spec:
             - name: GHA2DB_PROJECTS_YAML
               value: {{ $root.Values.projectsFile }}
             - name: PG_PORT
-              value: 5432
+              value: '5432'
             - name: GHA2DB_GITHUB_OAUTH
               valueFrom:
                 secretKeyRef:
