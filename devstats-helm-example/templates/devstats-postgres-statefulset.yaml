@@ -46,6 +46,25 @@ spec:
       serviceAccountName: '{{ .Values.postgresSvcName }}'
       containers:
       - name: '{{ .Values.postgresSvcName }}'
+{{ if .Values.overwritePostgresCommand }}
+        command:
+          - {{ .Values.postgresCommand }}
+{{ if .Values.postgresCommandArgs }}
+        args:
+{{- with .Values.postgresCommandArgs -}}
+{{ toYaml . | nindent 10 }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ if .Values.usePostgresResourcesLimits }}
+        resources:
+          requests:
+            memory: '{{ .Values.requestsPostgresMemory }}'
+            cpu: '{{ .Values.requestsPostgresCPU }}'
+          limits:
+            memory: '{{ .Values.limitsPostgresMemory }}'
+            cpu: '{{ .Values.limitsPostgresCPU }}'
+{{ end }}
         image: '{{ .Values.postgresImageName }}'
         imagePullPolicy: '{{ .Values.imagePullPolicy }}'
         ports:

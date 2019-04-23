@@ -45,6 +45,10 @@
 # nodeSelector:
 #   node: devstats
 # onlyMetrics: 'events,tz'
+# overwritePostgresCommand: true
+# postgresCommand: 'sleep'
+# postgresCommandArgs:
+#   - "36000"
 # periods: 'd7:t,m:f,q:t,y10:f'
 # provisionCommand: './k8s/repos.sh'
 # provisionCommand: './k8s/affs.sh'
@@ -96,6 +100,8 @@ limitsCronsCPU: '6000m'
 limitsCronsMemory: '16Gi'
 limitsGrafanasCPU: '2000m'
 limitsGrafanasMemory: '8Gi'
+limitsPostgresCPU: '4000m'
+limitsPostgresMemory: '8Gi'
 limitsProvisionsCPU: '8000m'
 limitsProvisionsMemory: '24Gi'
 name: devstats
@@ -107,6 +113,8 @@ projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
+requestsPostgresCPU: '1000m'
+requestsPostgresMemory: '4Gi'
 postgresSvcName: 'devstats-postgres'
 postgresImageName: 'jberkus/simple-patroni:v3'
 postgresStorageSize: '100Gi'
@@ -136,6 +144,7 @@ useBootstrapResourcesLimits: 1
 useCronsResourcesLimits: 1
 useGrafanasResourcesLimits: 1
 useProvisionsResourcesLimits: 1
+usePostgresResourcesLimits: 1
 waitForBootstrap: 30
 labels:
   name: devstats
