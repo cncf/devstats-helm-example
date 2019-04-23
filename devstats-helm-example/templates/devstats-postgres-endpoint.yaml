@@ -5,7 +5,7 @@ Endpoint for PostgreSQL master service.  On deploy, this does nothing; once spun
 */ -}}
 ---
 apiVersion: v1
-kind: Endpoint
+kind: Endpoints
 metadata:
   name: '{{ .Values.postgresSvcName }}-config'
   labels:

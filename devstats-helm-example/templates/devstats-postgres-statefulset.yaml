@@ -4,7 +4,7 @@
 Actual Postgres nodes, running patroni
 */ -}}
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: '{{ .Values.postgresSvcName }}'
