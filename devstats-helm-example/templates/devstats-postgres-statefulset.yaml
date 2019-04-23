@@ -19,6 +19,16 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     cluster-name: '{{ .Values.postgresSvcName }}'
 spec:
+  selector:
+    matchLabels:
+      type: postgres
+{{- with .Values.labels -}}
+{{ toYaml . | nindent 6 }}
+{{ end }}
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      # app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/managed-by: {{ .Release.Service }}
+      cluster-name: '{{ .Values.postgresSvcName }}'
   replicas: {{ .Values.postgresNodes }}
   serviceName: '{{ .Values.postgresSvcName }}'
   template:
