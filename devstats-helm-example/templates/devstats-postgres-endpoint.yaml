@@ -1,7 +1,8 @@
 {{- $skipPostgres := .Values.skipPostgres -}}
 {{ if not $skipPostgres }}
 {{- /*
-Endpoint for PostgreSQL master service.  On deploy, this does nothing; once spun up, the master pod will direct it to itself.
+Endpoint for PostgreSQL master service.
+On deploy, this does nothing; once spun up, the master pod will direct it to itself.
 */ -}}
 ---
 apiVersion: v1
@@ -16,5 +17,4 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     cluster-name: '{{ .Values.postgresSvcName }}'
 subsets: []
-
 {{ end }}

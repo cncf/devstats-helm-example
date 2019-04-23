@@ -31,7 +31,7 @@ spec:
       containers:
       - name: '{{ .Values.postgresSvcName }}'
         image: '{{ .Values.postgresImageName }}'
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: '{{ .Values.imagePullPolicy }}'
         ports:
         - containerPort: 8008
           protocol: TCP

@@ -1,7 +1,9 @@
 {{- $skipPostgres := .Values.skipPostgres -}}
 {{ if not $skipPostgres }}
 {{- /*
-Postgres RBAC role.  Required for the deployed postgres pods to have control over configmaps, endpoint and services required to control leader election and failover.
+Postgres RBAC role.
+Required for the deployed postgres pods to have control over
+configmaps, endpoint and services required to control leader election and failover.
 */ -}}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -22,5 +24,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: '{{ .Values.postgresSvcName }}'
-
 {{ end }}

@@ -2,10 +2,10 @@
 # Secrets that can be set via files in `./secrets/*.secret`, via command line by `--set 'pgAdminUser=xyz,pgHost=host.com,...'` or even uncomment them in the lines below.
 # pgAdminUser: ''
 # pgHost: ''
-# pgPort: ''
 # pgPass: ''
 # pgPassRO: ''
 # pgPassTeam: ''
+# pgPassRep: ''
 # githubOAuth: ''
 # grafanaUser: ''
 # grafanaPassword: ''
@@ -106,9 +106,10 @@ projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
-postgresSvcName: devstats-postgres
+postgresSvcName: 'devstats-postgres'
 postgresImageName: 'jberkus/simple-patroni:v3'
 postgresStorageSize: '100Gi'
+postgresNodes: 3
 pvName: devstats-pvc
 requestsBootstrapCPU: '500m'
 requestsBootstrapMemory: '1Gi'
