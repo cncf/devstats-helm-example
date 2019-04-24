@@ -21,5 +21,6 @@ spec:
     name: patronictl
   selector:
     type: postgres
+    role: replica
     cluster-name: '{{ .Values.postgresSvcName }}'
 {{ end }}

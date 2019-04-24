@@ -74,7 +74,7 @@ spec:
         - name: PATRONI_KUBERNETES_LABELS
           value: '{"type": "postgres", "cluster-name": "{{ .Values.postgresSvcName }}"}'
         - name: PATRONI_KUBERNETES_PORTS
-          value: '{[{"name": "postgresql", "port": 5432}]}'
+          value: '[{"name": "postgresql", "port": 5432}]'
         - name: PATRONI_SUPERUSER_USERNAME
           valueFrom:
             secretKeyRef:
@@ -95,7 +95,7 @@ spec:
         - name: PATRONI_SCOPE
           value: '{{ .Values.postgresSvcName }}'
         - name: PATRONI_KUBERNETES_USE_ENDPOINTS
-          value: 'false'
+          value: 'true'
         - name: PATRONI_NAME
           valueFrom:
             fieldRef:

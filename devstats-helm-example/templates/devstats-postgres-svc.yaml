@@ -12,13 +12,13 @@ metadata:
     type: postgres
     cluster-name: '{{ .Values.postgresSvcName }}'
 spec:
-  type: ClusterIP
+  clusterIP: None
+  spec:
   ports:
-  - name: postgresql
-    port: 5432
-    targetPort: 5432
+  - port: 5432
+    name: psql
   selector:
     type: postgres
     role: master
-protocol: TCP
+    cluster-name: '{{ .Values.postgresSvcName }}'
 {{ end }}
