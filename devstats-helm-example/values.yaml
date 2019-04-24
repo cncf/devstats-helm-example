@@ -124,9 +124,9 @@ requestsCronsCPU: '1000m'
 requestsCronsMemory: '2Gi'
 requestsGrafanasCPU: '1000m'
 requestsGrafanasMemory: '1Gi'
-requestsPostgresCPU: '4000m'
-requestsPostgresMemory: '6Gi'
-requestsProvisionsCPU: '1000m'
+requestsPostgresCPU: '2000m'
+requestsPostgresMemory: '4Gi'
+requestsProvisionsCPU: '2000m'
 requestsProvisionsMemory: '2Gi'
 secretType: Opaque
 servicePodName: devstats-service
