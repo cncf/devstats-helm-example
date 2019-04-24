@@ -152,6 +152,14 @@ projects:
     icon: 'cncf'
     org: 'CNCF'
     repo: 'cncf/landscape'
-    cron: '7 * * * *'
+    cron: '25 * * * *'
     disk: 30Gi
     i: 0
+  - proj: prometheus
+    db: prometheus
+    icon: 'prometheus'
+    org: 'Prometheus'
+    repo: 'prometheus/prometheus'
+    cron: '10 * * * *'
+    disk: 10Gi
+    i: 1
