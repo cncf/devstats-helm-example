@@ -116,7 +116,7 @@ provisionRestartPolicy: Never
 requestsPostgresCPU: '1000m'
 requestsPostgresMemory: '4Gi'
 postgresSvcName: 'devstats-postgres'
-postgresImageName: 'jberkus/simple-patroni:v3'
+postgresImageName: 'lukaszgryglicki/devstats-patroni'
 postgresStorageSize: '100Gi'
 postgresNodes: 3
 pvName: devstats-pvc
