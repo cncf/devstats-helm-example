@@ -100,8 +100,8 @@ limitsCronsCPU: '6000m'
 limitsCronsMemory: '16Gi'
 limitsGrafanasCPU: '2000m'
 limitsGrafanasMemory: '8Gi'
-limitsPostgresCPU: '4000m'
-limitsPostgresMemory: '8Gi'
+limitsPostgresCPU: '6000m'
+limitsPostgresMemory: '16Gi'
 limitsProvisionsCPU: '8000m'
 limitsProvisionsMemory: '24Gi'
 name: devstats
@@ -113,11 +113,9 @@ projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
-requestsPostgresCPU: '1000m'
-requestsPostgresMemory: '4Gi'
 postgresSvcName: 'devstats-postgres'
 postgresImageName: 'lukaszgryglicki/devstats-patroni'
-postgresStorageSize: '100Gi'
+postgresStorageSize: '120Gi'
 postgresNodes: 3
 pvName: devstats-pvc
 requestsBootstrapCPU: '500m'
@@ -126,6 +124,8 @@ requestsCronsCPU: '1000m'
 requestsCronsMemory: '2Gi'
 requestsGrafanasCPU: '1000m'
 requestsGrafanasMemory: '1Gi'
+requestsPostgresCPU: '4000m'
+requestsPostgresMemory: '6Gi'
 requestsProvisionsCPU: '1000m'
 requestsProvisionsMemory: '2Gi'
 secretType: Opaque
