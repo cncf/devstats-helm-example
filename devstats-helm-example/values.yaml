@@ -115,7 +115,7 @@ provisionPodName: devstats-provision
 provisionRestartPolicy: Never
 postgresSvcName: 'devstats-postgres'
 postgresImageName: 'lukaszgryglicki/devstats-patroni'
-postgresStorageSize: '120Gi'
+postgresStorageSize: '100Gi'
 postgresNodes: 3
 pvName: devstats-pvc
 requestsBootstrapCPU: '500m'
