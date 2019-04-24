@@ -95,7 +95,7 @@ spec:
         - name: PATRONI_SCOPE
           value: '{{ .Values.postgresSvcName }}'
         - name: PATRONI_KUBERNETES_USE_ENDPOINTS
-          value: 'true'
+          value: 'false'
         - name: PATRONI_NAME
           valueFrom:
             fieldRef:

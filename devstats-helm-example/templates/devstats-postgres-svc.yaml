@@ -17,5 +17,8 @@ spec:
   - name: postgresql
     port: 5432
     targetPort: 5432
+  selector:
+    type: postgres
+    role: master
 protocol: TCP
 {{ end }}
