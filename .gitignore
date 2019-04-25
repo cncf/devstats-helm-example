@@ -55,3 +55,4 @@ sqlite/*.sql
 /report_alltime.txt
 *.secret
 /error.yaml
+/domain/devstats-demo.net.json
