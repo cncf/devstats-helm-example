@@ -49,6 +49,7 @@
 # postgresCommand: 'sleep'
 # postgresCommandArgs:
 #   - "36000"
+# postgresImageName: 'lukaszgryglicki/devstats-patroni'
 # periods: 'd7:t,m:f,q:t,y10:f'
 # provisionCommand: './k8s/repos.sh'
 # provisionCommand: './k8s/affs.sh'
@@ -115,7 +116,7 @@ provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
 postgresSvcName: 'devstats-postgres'
-postgresImageName: 'lukaszgryglicki/devstats-patroni'
+postgresImageName: 'jberkus/simple-patroni:v3'
 postgresStorageSize: '100Gi'
 postgresNodes: 3
 pvName: devstats-pvc
