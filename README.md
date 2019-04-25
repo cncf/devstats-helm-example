@@ -4,6 +4,9 @@ DevStats Deployment on Kubernetes using Helm. This is an example deployment of a
 
 Helm chart in `devstats-helm-example`.
 
+# Ingress first
+
+pleas install ingress first, for example `AWS`: `AWS_INGRESS.md`.
 
 # Usage
 
