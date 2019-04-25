@@ -119,8 +119,9 @@ spec:
           value: '0.0.0.0:8008'
       terminationGracePeriodSeconds: 0
       nodeSelector:
-{{- with $root.Values.dbNodeSelector -}}
+{{- with .Values.dbNodeSelector -}}
 {{ toYaml . | nindent 8 }}
+{{ end }}
   volumeClaimTemplates:
   - metadata:
       annotations:
