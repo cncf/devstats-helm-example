@@ -27,6 +27,10 @@ spec:
       securityContext:
         fsGroup: 999
       serviceAccountName: '{{ .Values.postgresSvcName }}'
+      volumes:
+      - name: devshm
+        emptyDir:
+          medium: Memory
       containers:
       - name: '{{ .Values.postgresSvcName }}'
 {{ if .Values.overwritePostgresCommand }}
@@ -58,6 +62,8 @@ spec:
         volumeMounts:
         - mountPath: /home/postgres/pgdata
           name: pgdata
+        - mountPath: /dev/shm
+          name: devshm
         env:
         - name: PATRONI_KUBERNETES_POD_IP
           valueFrom:
