@@ -12,9 +12,8 @@ metadata:
     type: 'pvc'
     proj: {{ .proj }}
   annotations:
-    volume.beta.kubernetes.io/storage-class: {{ $root.Values.storageClass }}
+    volume.alpha.kubernetes.io/storage-class: {{ $root.Values.storageClass }}
 spec:
-  storageClassName: {{ $root.Values.storageClass }}
   accessModes:
     - {{ $root.Values.storageAccessModes }}
   resources:
