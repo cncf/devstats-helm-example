@@ -9,11 +9,13 @@ kind: StatefulSet
 metadata:
   name: '{{ .Values.postgresSvcName }}'
   labels:
+    name: devstats
     type: postgres
     cluster-name: '{{ .Values.postgresSvcName }}'
 spec:
   selector:
     matchLabels:
+      name: devstats
       type: postgres
       cluster-name: '{{ .Values.postgresSvcName }}'
   replicas: {{ .Values.postgresNodes }}
@@ -21,6 +23,7 @@ spec:
   template:
     metadata:
       labels:
+        name: devstats
         type: postgres
         cluster-name: '{{ .Values.postgresSvcName }}'
     spec:
@@ -78,7 +81,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: PATRONI_KUBERNETES_LABELS
-          value: '{"type": "postgres", "cluster-name": "{{ .Values.postgresSvcName }}"}'
+          value: '{"name": "devstats", "type": "postgres", "cluster-name": "{{ .Values.postgresSvcName }}"}'
         - name: PATRONI_KUBERNETES_PORTS
           value: '[{"name": "postgresql", "port": 5432}]'
         - name: PATRONI_SUPERUSER_USERNAME
@@ -115,6 +118,9 @@ spec:
         - name: PATRONI_RESTAPI_LISTEN
           value: '0.0.0.0:8008'
       terminationGracePeriodSeconds: 0
+      nodeSelector:
+{{- with $root.Values.dbNodeSelector -}}
+{{ toYaml . | nindent 8 }}
   volumeClaimTemplates:
   - metadata:
       annotations:

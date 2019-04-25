@@ -6,6 +6,7 @@ kind: Pod
 metadata:
   name: {{ .Values.bootstrapPodName }}
   labels:
+    name: devstats
     type: 'boot'
     proj: bootstrap
 spec:
@@ -32,6 +33,8 @@ spec:
       value: "1"
     - name: ONLYINIT
       value: "1"
+    - name: WAITBOOT
+      value: '{{ .Values.waitForPostgres }}'
     - name: SKIPTEMP
       value: "1"
     - name: NOLOCK
@@ -111,7 +114,7 @@ spec:
     name: {{ .Values.bootstrapPodName }}
   restartPolicy: {{ .Values.bootstrapRestartPolicy }}
   nodeSelector:
-{{- with .Values.nodeSelector -}}
+{{- with .Values.appNodeSelector -}}
 {{ toYaml . | nindent 4 }}
 {{ end }}
 {{ end }}

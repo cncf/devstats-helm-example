@@ -9,6 +9,7 @@ kind: Pod
 metadata:
   name: '{{ $root.Values.provisionPodName }}-{{ .proj }}'
   labels:
+    name: devstats
     type: 'provision'
     proj: {{ .proj }}
 spec:
@@ -123,7 +124,7 @@ spec:
       claimName: '{{ $root.Values.pvName }}-{{ .proj }}'
   restartPolicy: {{ $root.Values.provisionRestartPolicy }}
   nodeSelector:
-{{- with $root.Values.nodeSelector -}}
+{{- with $root.Values.appNodeSelector -}}
 {{ toYaml . | nindent 4 }}
 {{ end }}
 {{ end }}

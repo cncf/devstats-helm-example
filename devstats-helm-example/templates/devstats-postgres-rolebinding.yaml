@@ -11,6 +11,7 @@ kind: RoleBinding
 metadata:
   name: '{{ .Values.postgresSvcName }}'
   labels:
+    name: devstats
     type: postgres
     cluster-name: '{{ .Values.postgresSvcName }}'
 roleRef:

@@ -42,8 +42,10 @@
 # grafanaCommandArgs:
 #   - "36000"
 #   - arg2
-# nodeSelector:
-#   node: devstats
+# appNodeSelector:
+#   node: devstats-app
+# dbNodeSelector:
+#   node: devstats-db
 # onlyMetrics: 'events,tz'
 # overwritePostgresCommand: true
 # postgresCommand: 'sleep'
@@ -148,6 +150,7 @@ useGrafanasResourcesLimits: 1
 useProvisionsResourcesLimits: 1
 usePostgresResourcesLimits: 1
 waitForBootstrap: 30
+waitForPostgres: 2
 projects:
   - proj: cncf
     db: cncf

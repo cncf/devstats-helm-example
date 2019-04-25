@@ -9,17 +9,20 @@ kind: Deployment
 metadata:
   name: '{{ $root.Values.grafanaPodName }}-{{ .proj }}'
   labels:
+    name: devstats
     type: 'grafana'
     proj: {{ .proj }}
 spec:
   replicas: {{ $root.Values.grafanaNReplicas }}
   selector:
     matchLabels:
+      name: devstats
       type: 'grafana'
       proj: {{ .proj }}
   template:
     metadata:
       labels:
+        name: devstats
         type: 'grafana'
         proj: {{ .proj }}
     spec:
@@ -79,7 +82,7 @@ spec:
               key: GF_SECURITY_ADMIN_PASSWORD.secret
       restartPolicy: {{ $root.Values.grafanaRestartPolicy }}
       nodeSelector:
-{{- with $root.Values.nodeSelector -}}
+{{- with $root.Values.appNodeSelector -}}
 {{ toYaml . | nindent 8 }}
 {{ end }}
 {{ end }}

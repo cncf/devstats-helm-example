@@ -9,12 +9,14 @@ kind: Service
 metadata:
   name: '{{ $root.Values.servicePodName }}-{{ .proj }}'
   labels:
+    name: devstats
     type: 'service'
     proj: {{ .proj }}
 spec:
   ports:
   - port: {{ $root.Values.grafanaPort }}
   selector:
+    name: devstats
     type: 'grafana'
     proj: {{ .proj }}
   type: {{ $root.Values.serviceType }}

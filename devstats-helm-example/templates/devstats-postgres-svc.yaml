@@ -9,6 +9,7 @@ kind: Service
 metadata:
   name: '{{ .Values.postgresSvcName }}'
   labels:
+    name: devstats
     type: postgres
     cluster-name: '{{ .Values.postgresSvcName }}'
 spec:
@@ -18,6 +19,7 @@ spec:
   - port: 5432
     name: psql
   selector:
+    name: devstats
     type: postgres
     role: master
     cluster-name: '{{ .Values.postgresSvcName }}'
