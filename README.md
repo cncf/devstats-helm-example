@@ -74,6 +74,37 @@ aws_access_key_id = yyyyyyyyyyyyyyyyyy
 ```
 
 # Architecture
+
+Final deployments:
+
+- [CNCF](https://cncf.devstats-demo.net).
+- [Prometheus](https://prometheus.devstats-demo.net).
+
+DevStats data sources:
+
+- GHA ([GitHub Archives](https://www.gharchive.org)) this is the main data source, it uses GitHub API in real-time and saves all events from every hour into big compressed files containing all events from that hour (JSON array).
+- GitHub API (we're only using this to track issues/PRs hourly to make sure we're not missing wvents - GHA sometimes misses some events).
+- git - we're storing closes for all GitHub repositories from all projects - that allows file-level granularity commits analysis.
+
+Storage:
+
+- All data from datasources are stored in HA Postgres database (patroni).
+- Git repository clones are stored in per-pod persistent volumes (type AWS EBS). Each project has its own persisntent volume claim to store its git data.
+
+Database:
+
+- We are using patroni database consisting of 3 nodes. Each node has its own persistent volume claim (AWS EBS) that stores database data. This gives 3x redundancy.
+- Docker limits each pod's shared memory to 64MB, so all patroni pods are mounting special volume (type: memory) under /dev/shm, that way each pod has unlimited SHM memory (actually limited by RAM accessible to pod).
+- Patroni supports automatic master election (it uses ERBAC and manipulates service endpoints to make that transparent for app pods).
+- Patroni is providing continuous replication within those 3 nodes.
+- Write performance is limited by single node power, read performance is up to 3x (2 read replicas and master).
+
+Cluster:
+
+- We are using AWS EKS cluster running `v1.12` Kubernetes that is set up via [eksctl tool](https://eksctl.io).
+- Currently we're using 3 EC2 nodes (type `m5.2xlarge`) in `us-east-1` zone.
+
+
 https://prometheus.devstats-demo.net/d/8/dashboards?orgId=1 (full stack DevStats on EKS, using patroni HA database)
 ```Database: patroni with 3x redundancy (3 nodes). 1 master node (with automatic master elections) and 2 slave nodes/read replicas. Storage backend AWS EBS (3x redundancy). UI updated to Grafana 6.1.4. Using OpenShift hack that mounts volume type memory under /dev/shm (to avoid docker limiting pod SHM to 64MB which kills DB). Full Ingress stack is ready for CNCF EKS: this includes registered Route 53 domain pointing to nginx-ingress ELB external IP, AWS hosted zone, CNAME and Alias records (wildcard subdomains *.devstats-demo.net), cert-manager installation, production Let's encrypt SSL certificate with auto renewal + docs for all of this stuff - yay!```
 still struggling with small provisioning issues, but you can see full-stack devstats deployed here: https://prometheus.devstats-demo.net and https://cncf.devstats-demo.net.
