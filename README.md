@@ -29,14 +29,14 @@ aws_access_key_id = yyyyyyyyyyyyyyyyyy
 ```
 
 
-# Ingress
+# Domain, DNS and Ingress
 
-Please install ingress first, for example `AWS`: `AWS_INGRESS.md`.
+Please configure domain, DNS and Ingress first, for example `AWS.md`.
 
 
 # SSL
 
-Install SSL certificates `SSL.md`.
+Install SSL certificates using Let's encrypt and auto renewal using `cert-manager`: `SSL.md`.
 
 
 # Usage
