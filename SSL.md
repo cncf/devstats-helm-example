@@ -16,5 +16,4 @@ Please make sure that you have DNS configured and ingress controlled working wit
 - Eventually delete old secret with self-signed certificate: `kubectl delete secret devstats-tls`.
 - `kubectl describe secret devstats-tls`, `kubectl get certificates`, `kubectl get order`, `cncfkubectl.sh describe order devstats-tls-xxx`.
 
-
 Reference: `https://github.com/jetstack/cert-manager/blob/master/docs/tutorials/acme/quick-start/index.rst`.

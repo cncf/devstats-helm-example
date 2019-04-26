@@ -4,9 +4,40 @@ DevStats Deployment on Kubernetes using Helm. This is an example deployment of f
 
 Helm chart in `devstats-helm-example`.
 
-# Ingress first
 
-Please install ingress first, for example `AWS`: `AWS_INGRESS.md`. Then install SSL certificates `SSL.md`.
+# EKS cluster
+
+If you want to use EKS cluster, there are some shell scripts in `scripts` directory that can be useful:
+
+- `cncfekscluster.sh` - can be used to create EKS cluster, it uses [eksctl](https://eksctl.io).
+- `cncfkubectl.sh` - once cluster is up and running you can use it as `kubectl` - it is configured to use cluster created by `cncfekscluster.sh`.
+- `cncfec2desc.sh` - you can use it to list `EC2` instances created by `cncfekscluster.sh`.
+
+Before using any of those script you need to define `cncf` AWS profile by modifying files in `~/.aws/` directory:
+
+- `config` (example):
+```
+[profile cncf]
+region = eu-west-3
+output = json
+```
+- `credentials` (example redacted):
+```
+[cncf]
+aws_secret_access_key = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+aws_access_key_id = yyyyyyyyyyyyyyyyyy
+```
+
+
+# Ingress
+
+Please install ingress first, for example `AWS`: `AWS_INGRESS.md`.
+
+
+# SSL
+
+Install SSL certificates `SSL.md`.
+
 
 # Usage
 
@@ -50,28 +81,6 @@ To debug provisioning use:
 - Then for example: `PG_USER=gha_admin db.sh psql cncf`, followed: `select dt, proj, prog, msg from gha_logs where proj = 'cncf' order by dt desc limit 40;`.
 - Finally delete pod: `kubectl delete pod devstats-provision-cncf`.
 
-# EKS cluster
-
-If you want to use EKS cluster, there are some shell scripts in `scripts` directory that can be useful:
-
-- `cncfekscluster.sh` - can be used to create EKS cluster, it uses [eksctl](https://eksctl.io).
-- `cncfkubectl.sh` - once cluster is up and running you can use it as `kubectl` - it is configured to use cluster created by `cncfekscluster.sh`.
-- `cncfec2desc.sh` - you can use it to list `EC2` instances created by `cncfekscluster.sh`.
-
-Before using any of those script you need to define `cncf` AWS profile by modifying files in `~/.aws/` directory:
-
-- `config` (example):
-```
-[profile cncf]
-region = eu-west-3
-output = json
-```
-- `credentials` (example redacted):
-```
-[cncf]
-aws_secret_access_key = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-aws_access_key_id = yyyyyyyyyyyyyyyyyy
-```
 
 # Architecture
 
@@ -90,21 +99,87 @@ Storage:
 
 - All data from datasources are stored in HA Postgres database (patroni).
 - Git repository clones are stored in per-pod persistent volumes (type AWS EBS). Each project has its own persisntent volume claim to store its git data.
+- All volumes used for databas eor git storage use `ReadWriteOnce` and are private to their corresponding pods.
 
 Database:
 
-- We are using patroni database consisting of 3 nodes. Each node has its own persistent volume claim (AWS EBS) that stores database data. This gives 3x redundancy.
+- We are using HA patroni postgres 11 database consisting of 3 nodes. Each node has its own persistent volume claim (AWS EBS) that stores database data. This gives 3x redundancy.
 - Docker limits each pod's shared memory to 64MB, so all patroni pods are mounting special volume (type: memory) under /dev/shm, that way each pod has unlimited SHM memory (actually limited by RAM accessible to pod).
-- Patroni supports automatic master election (it uses ERBAC and manipulates service endpoints to make that transparent for app pods).
+- Patroni supports automatic master election (it uses RBAC's and manipulates service endpoints to make that transparent for app pods).
 - Patroni is providing continuous replication within those 3 nodes.
 - Write performance is limited by single node power, read performance is up to 3x (2 read replicas and master).
+- We're using time-series like approach when generating final data displayed on dashboards (custom time-series implementation at top of postgres database).
 
 Cluster:
 
 - We are using AWS EKS cluster running `v1.12` Kubernetes that is set up via [eksctl tool](https://eksctl.io).
 - Currently we're using 3 EC2 nodes (type `m5.2xlarge`) in `us-east-1` zone.
+- We are using Helm + Tiller for deploying entire DevStats project.
 
+UI:
 
-https://prometheus.devstats-demo.net/d/8/dashboards?orgId=1 (full stack DevStats on EKS, using patroni HA database)
-```Database: patroni with 3x redundancy (3 nodes). 1 master node (with automatic master elections) and 2 slave nodes/read replicas. Storage backend AWS EBS (3x redundancy). UI updated to Grafana 6.1.4. Using OpenShift hack that mounts volume type memory under /dev/shm (to avoid docker limiting pod SHM to 64MB which kills DB). Full Ingress stack is ready for CNCF EKS: this includes registered Route 53 domain pointing to nginx-ingress ELB external IP, AWS hosted zone, CNAME and Alias records (wildcard subdomains *.devstats-demo.net), cert-manager installation, production Let's encrypt SSL certificate with auto renewal + docs for all of this stuff - yay!```
-still struggling with small provisioning issues, but you can see full-stack devstats deployed here: https://prometheus.devstats-demo.net and https://cncf.devstats-demo.net.
+- We are using Grafana 6.1.4, all dashboards, users and datasources are automatically provisioned from JSONs and template files.
+- We're using read-only connection to HA patroni database to take advantage of read-replicas and 3x faster read connections.
+- Grafana is running on plain HTTP and port 3000, ingress controller is responsible for SSL/HTTPS layer.
+
+DNS:
+
+- We're using AWS Route 53 domain registered automatically from a shell script that points to `nginx-ingress` AWS ELB endpoint: devstats-demo.net.
+- That domain automatically creates AWS hosted zone that maintains its and its subdomains DNS configuration.
+- For that domain we're adding wildcard subdomain `*.devstats-demo.net` (also using automated scripts). Domain and all sub domains are pointing to ingress ELB enternal IP.
+- Subdomains use CNAME records to point to ingress ELB, while domain itself uses Alias (AWS requires this).
+
+SSL/HTTPS:
+
+- We're using `cert-manager` to automatically obtain and renewal Let's Encrypt certificates for our domain.
+- CRD objects are responsible for generating and updating SSL certs and keeping them in auto-generated kubernetes secrets used by our ingress.
+
+Ingress:
+
+- We're using `nginx-ingress` to provide HTTPS and to disable plain HTTP access.
+- Ingress holds SSL certificate data in annotations (this is managed by `cert-manager`).
+- Based on the request hostname `prometheus.devstats-demo.net` or `cncf.devstats-demo.net` we're redirecting trafic to a specific Grafana service (running on port 80 inside the cluster).
+- Each Grafana has internal (only inside the cluster) service from port 3000 to port 80.
+
+Deployment:
+
+- Helm chart allows very specific deployments, you can specify which obejcts should be created and also for which projects
+- For exampel you can create only Grafana service for prometheus, or only provision CNCF with a non-standar command etc.
+
+Resource configuration:
+
+- All pods have resource (memory and CPU) limits and requests defined.
+- We are using node selector to decide where pods should run (we use `app` pods for Grafanas and Devstats pods and `db` for patroni pods)
+- DevStats pods are either provisioning pods (running once when initializing data) or hourly-sync pods (spawned from cronjobs for all projects every hour).
+
+Secrets:
+
+- Postgres connection parameters, grafana credentials, GitHub oauth tokes are all stored in `*.secret` files (they're gitignored and not checked into the repo). Each such file has `*.secret.example` counterpart as a hint for user to create the actual `*.secret` file.
+
+Docker images:
+
+- We're using docker as our container engine, all images are defined in `github.com/cncf/devstats-docker-images` and pushed to the docker hub under `lukaszgryglicki` username.
+- `devstats` - full devstats image, contining provisioning/bootstrap scripts - used for provisioning each project and initial bootstapping database.
+- `devstats-minimal` - minimal devstats image, used by hourly-sync cron jobs (contains only tools needed to do a hourly sync).
+- `devstats-grafana` - Grafana image containing all tools to provision Grafana for a given project (dashboards JSONs, datasource/config templates etc.).
+- `jberkus/simple-patroni:v3` - image containing patroni HA database.
+
+Architecture:
+
+- Bootstrap pod - it is responsible for creating logs database (shared by all devstats pods instances), users (admin, team, readonly), database permissions etc. It waits for patroni HA DB to become ready before doing its job. It doesn't mount aby volumes. Patroni credentials come from secret.
+- Grafana pods - each project has its own Grafana deployment. Grafana pods are not using persistent volumes. They use read-only patroni connection to take advantage of HA (read replicas). Grafana credentials come from secret.
+- Hourly sync cronjobs - each project has its own cron job that runs every hour (on different minute). It uses postgres and github credentials from secret files. It mounts per-project persistent volume to keep git clones stored there. It ensures that no provisioning is running for that project before syncing data. Next cron job can only start when previous finished.
+- Ingress - single instance but containing variable number of configurations (one hostname per one project). It adds https and direct trafic to a proper grafana service instance. `cert-manager` updates its annotations when SSL cert is renewed.
+- Postgres endpoint - endpoint for PostgreSQL master service. On deploy, this does nothing; once spun up, the master pod will direct it to itself.
+- Postgres rolebinding - Postgres RBAC role binding.
+- Postgres role - Postgres RBAC role. Required for the deployed postgres pods to have control over configmaps, endpoint and services required to control leader election and failover.
+- Postgres statefulset - main patroni objcet - creates 3 nodes, uses security group to allow mounting its volume as a postgres user. Creates 3 nodes (1 becomes master, 2 read-replicas). Each node has its own EBS storage (which is replicated from master). Uses SHM memory hack to allow docker containers use full RAM for SHM. gets postgres credentials from secret file. each node exposes postgres port and a special `patroni` REST API port 8008. Holds full patroni configuration.
+- Postgres service account - needed to manage Postgres RBAC.
+- Postgres service config - placeholder service to keep the leader election endpoint from getting deleted during initial deployment. Not useful for connecting to anything: `postgres-service-config`.
+- Postgres service read-only - service for load-balanced, read-only connections to the pool of PostgreSQL instances: `postgres-service-ro`.
+- Postgres service - service for read/write connections, that is connections to the master node: `postgres-service` - this remains constant while underlying endpoint will direct to the current patroni master node.
+- Provisioning pods - each project initailly starts provisioning pod that generates all its data. They set special flag on their DB so cronjobs will not interfere their work. It waits for patroni to become ready and for bootstrap to be complete (shared logs DB, users, permissions etc.). It uses full devstats image to do provisioning, each project has its own persistent volume that holds git clones data. GitHub and Postgres credentials come from secrets. If cron job is running this won't start (this is to avoid interfering cronjob with a non-standar provision call executed later, for example updating company affiliations etc.)
+- Persistent Volumes - each project has its own persistent volume for git repo clones storage, this is used only by provisioning pods and cron jobs.
+- Secrets - holds GitHub OAuth token(s) (DevStats can use >1 token and switch between them when approaching API limits), Postgres credentials and connection parameters, Grafana credentials.
+- Grafana services - each project has its own grafana service. It maps from Grafana port 3000 into 80. They're endpoint for Ingress depending on project (distinguised by hostname).
+
