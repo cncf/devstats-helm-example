@@ -19,6 +19,8 @@
 # skipProvisions (will not create provisioning pods, usually not needed, provisioning pod will detect already provisioned projects and only provision new ones)
 # skipSecrets (will not attempt to create secrets, if you want to create new secrets delete current secrets first and do not set this flag)
 # skipServices (will not attempt to create services (Load Balancers))
+# skipPostgres (will not attempt to create patroni postgres)
+# skipIngress (will not attempt to create ingress)
 # skipBootstrap: 1
 # skipCrons: 1
 # skipGrafanas: 1
@@ -26,6 +28,8 @@
 # skipProvisions: 1
 # skipSecrets: 1
 # skipServices: 1
+# skipPostgres: 1
+# skipIngress: 1
 #
 # You can overwrite the number of CPU autodetected in each pod, setting this to 1 will make each pod single-threaded
 # nCPUs: 0
@@ -92,6 +96,8 @@ indexCronsFrom: 0
 indexCronsTo: 100
 indexGrafanasFrom: 0
 indexGrafanasTo: 100
+indexIngressesFrom: 0
+indexIngressesTo: 100
 indexProvisionsFrom: 0
 indexProvisionsTo: 100
 indexPVsFrom: 0
@@ -134,7 +140,6 @@ requestsProvisionsCPU: '2000m'
 requestsProvisionsMemory: '2Gi'
 secretType: Opaque
 servicePodName: devstats-service
-serviceType: LoadBalancer
 storageAccessModes: ReadWriteOnce
 storageClass: default
 syncCommand: devstats

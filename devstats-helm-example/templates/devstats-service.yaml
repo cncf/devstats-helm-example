@@ -14,12 +14,13 @@ metadata:
     proj: {{ .proj }}
 spec:
   ports:
-  - port: {{ $root.Values.grafanaPort }}
+  - port: 80
+    targetPort: {{ $root.Values.grafanaPort }}
+    protocol: TCP
   selector:
     name: devstats
     type: 'grafana'
     proj: {{ .proj }}
-  type: {{ $root.Values.serviceType }}
 {{ end }}
 {{ end }}
 {{ end }}
