@@ -161,7 +161,7 @@ projects:
     db: cncf
     icon: 'cncf'
     org: 'CNCF'
-    repo: 'cncf/landscape'
+    repo: 'cncf/landscapeapp'
     cron: '25 * * * *'
     disk: 30Gi
     i: 0
