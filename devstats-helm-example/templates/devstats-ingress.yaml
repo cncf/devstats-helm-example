@@ -10,8 +10,8 @@ metadata:
     type: 'ingress'
   annotations:
     kubernetes.io/ingress.class: "nginx"    
-    #certmanager.k8s.io/issuer: "letsencrypt-staging"
-    #certmanager.k8s.io/acme-challenge-type: http01
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/acme-challenge-type: http01
 spec:
   tls:
   - hosts:

@@ -56,3 +56,4 @@ sqlite/*.sql
 *.secret
 /error.yaml
 /domain/devstats-demo.net.json
+/domain/cert-issuer.yaml

@@ -1,12 +1,12 @@
 # devstats-helm-example
 
-DevStats Deployment on Kubernetes using Helm. This is an example deployment of a single project - CNCF organization.
+DevStats Deployment on Kubernetes using Helm. This is an example deployment of few CNCF projects.
 
 Helm chart in `devstats-helm-example`.
 
 # Ingress first
 
-pleas install ingress first, for example `AWS`: `AWS_INGRESS.md`.
+Please install ingress first, for example `AWS`: `AWS_INGRESS.md`. Then install SSL certificates `SSL.md`.
 
 # Usage
 
@@ -72,3 +72,8 @@ output = json
 aws_secret_access_key = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 aws_access_key_id = yyyyyyyyyyyyyyyyyy
 ```
+
+# Architecture
+https://prometheus.devstats-demo.net/d/8/dashboards?orgId=1 (full stack DevStats on EKS, using patroni HA database)
+```Database: patroni with 3x redundancy (3 nodes). 1 master node (with automatic master elections) and 2 slave nodes/read replicas. Storage backend AWS EBS (3x redundancy). UI updated to Grafana 6.1.4. Using OpenShift hack that mounts volume type memory under /dev/shm (to avoid docker limiting pod SHM to 64MB which kills DB). Full Ingress stack is ready for CNCF EKS: this includes registered Route 53 domain pointing to nginx-ingress ELB external IP, AWS hosted zone, CNAME and Alias records (wildcard subdomains *.devstats-demo.net), cert-manager installation, production Let's encrypt SSL certificate with auto renewal + docs for all of this stuff - yay!```
+still struggling with small provisioning issues, but you can see full-stack devstats deployed here: https://prometheus.devstats-demo.net and https://cncf.devstats-demo.net.

@@ -11,6 +11,7 @@ Remember to set `AWS_PROFILE` and `KUBECONFIG`.
 - To add mapping to our `ingress-nginx`: `aws route53 change-resource-record-sets --hosted-zone-id xxx --change-batch '{"Changes":[{"Action":"CREATE","ResourceRecordSet":{"Name":"*.devstats-demo.net.","Type":"CNAME","TTL":300,"ResourceRecords":[{"Value":"zzz.us-east-1.elb.amazonaws.com"}]}}]}'`.
 - You will need a Zone ID (yyy) for the target ELB, find it via: `aws elb describe-load-balancers | grep Zone`.
 - To add mapping for the domain itself (not subdomains): `aws route53 change-resource-record-sets --hosted-zone-id xxx --change-batch '{"Changes":[{"Action":"CREATE","ResourceRecordSet":{"Name":"devstats-demo.net.","Type":"A","AliasTarget":{"HostedZoneId":"yyy","DNSName":"dualstack.zzz.us-east-1.elb.amazonaws.com.","EvaluateTargetHealth":false}}}]}'`
+- Now proceed to `cert-manager` installation in `SSL.md`.
 
 
 Other useful command (not necesarily needed in this setup):
