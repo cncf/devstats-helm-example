@@ -20,6 +20,8 @@ kubectl get role
 kubectl describe role devstats-postgres
 kubectl get serviceaccount
 kubectl describe serviceaccount devstats-postgres
+kubectl get ingress
+kubectl describe ingress devstats-ingress
 kubectl get po
 kubectl describe po devstats-postgres-0 devstats-postgres-1 devstats-postgres-2 devstats-provision-cncf devstats-provision-prometheus
 kubectl get events
