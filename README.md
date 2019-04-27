@@ -105,6 +105,7 @@ Database:
 
 - We are using HA patroni postgres 11 database consisting of 3 nodes. Each node has its own persistent volume claim (AWS EBS) that stores database data. This gives 3x redundancy.
 - Docker limits each pod's shared memory to 64MB, so all patroni pods are mounting special volume (type: memory) under /dev/shm, that way each pod has unlimited SHM memory (actually limited by RAM accessible to pod).
+- TODO: patroni image runs as postgres user so we're using security context filesystem group 999 (postgres) when mounting PVC for patroni pod, this still has issues when pod is killed and restarted with existing PVC - patroni complains about permissions then.
 - Patroni supports automatic master election (it uses RBAC's and manipulates service endpoints to make that transparent for app pods).
 - Patroni is providing continuous replication within those 3 nodes.
 - Write performance is limited by single node power, read performance is up to 3x (2 read replicas and master).
