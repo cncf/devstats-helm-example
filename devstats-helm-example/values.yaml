@@ -68,6 +68,7 @@
 #   - "36000"
 # queryOut: 1
 # reposDir: "/root/devstats_repos/"
+# runTests: true
 # skipMetrics: 'users_activity,committers_cum'
 # https://itnext.io/efs-persistent-volumes-on-aws-kubernetes-193e0035bbfb
 # storageAccessModes: ReadWriteMany
@@ -147,6 +148,9 @@ syncCommand: devstats
 syncImage: 'lukaszgryglicki/devstats-minimal'
 syncPodName: devstats
 syncRestartPolicy: Never
+testsImage: 'lukaszgryglicki/devstats-test'
+testsPodName: tests
+testsRestartPolicy: Never
 volumeMountName: data
 volumeMountPath: '/root'
 volumeName: data
