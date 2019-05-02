@@ -144,6 +144,7 @@ secretType: Opaque
 servicePodName: devstats-service
 storageAccessModes: ReadWriteOnce
 storageClass: default
+skipTemp: 1
 syncCommand: devstats
 syncImage: 'lukaszgryglicki/devstats-minimal'
 syncPodName: devstats

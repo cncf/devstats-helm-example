@@ -39,7 +39,7 @@ spec:
     - name: PROJREPO
       value: '{{ .repo }}'
     - name: SKIPTEMP
-      value: "1"
+      value: '{{ .Values.skipTemp }}'
     - name: NOLOCK
       value: "1"
     - name: NOBACKUP

@@ -36,7 +36,7 @@ spec:
     - name: WAITBOOT
       value: '{{ .Values.waitForPostgres }}'
     - name: SKIPTEMP
-      value: "1"
+      value: '{{ .Values.skipTemp }}'
     - name: NOLOCK
       value: "1"
     - name: NOBACKUP
