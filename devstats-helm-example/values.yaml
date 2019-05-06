@@ -125,6 +125,11 @@ projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
+postgresConfBuffers: '512MB'
+postgresConfMem: '64MB'
+postgresConfMaxParallel: '2'
+postgresConfMaxWorkers: '16'
+postgresConfWalBuffers: '64MB'
 postgresSvcName: 'devstats-postgres'
 postgresImageName: 'lukaszgryglicki/devstats-patroni'
 postgresStorageSize: '100Gi'
