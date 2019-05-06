@@ -80,6 +80,15 @@ spec:
             secretKeyRef:
               name: {{ $root.Values.grafanaSecret }}
               key: GF_SECURITY_ADMIN_PASSWORD.secret
+        livenessProbe:
+          exec:
+            command:
+            - 'wget'
+            - '-O/dev/null'
+            - '-q'
+            - '127.0.0.1:3000/login'
+          initialDelaySeconds: 90
+          periodSeconds: 30
       restartPolicy: {{ $root.Values.grafanaRestartPolicy }}
       nodeSelector:
 {{- with $root.Values.appNodeSelector -}}
