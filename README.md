@@ -163,7 +163,16 @@ Docker images:
 - `devstats` - full devstats image, contining provisioning/bootstrap scripts - used for provisioning each project and initial bootstapping database.
 - `devstats-minimal` - minimal devstats image, used by hourly-sync cron jobs (contains only tools needed to do a hourly sync).
 - `devstats-grafana` - Grafana image containing all tools to provision Grafana for a given project (dashboards JSONs, datasource/config templates etc.).
+- `devstats-test` - image containing all DevStats tests (it contains Go 1.12 runtime and postgres 11 database, executes database, series, metrics, regexp and other tests and other checks: format, lint, imports, vet, const, usedexports, errcheck).
 - `jberkus/simple-patroni:v3` - image containing patroni HA database.
+
+CI/CD:
+
+- We are using Travis CI on GitHub push events to devstats repositories.
+- Travis uses docker to download `devstats-test` image which has its own Postgres 11 database and Go 1.12 runtime.
+- Test image running from docker starts its own Postgres 11 instance and then downloads newest devstats repositories from GitHub and executes all tests.
+- After tests are finished, Travis passes results to a webhook that receives tests results, and deploys new devstats version depending on test results and commit message (it can skip deploy if special flags are used in the commit message).
+- Currently only bare metal instances are configured to receive Travis tests results and eventually deploy on success.
 
 Architecture:
 
