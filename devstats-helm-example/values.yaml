@@ -156,6 +156,7 @@ testsRestartPolicy: Never
 volumeMountName: data
 volumeMountPath: '/root'
 volumeName: data
+useFlags: ''
 useBootstrapResourcesLimits: 1
 useCronsResourcesLimits: 1
 useGrafanasResourcesLimits: 1

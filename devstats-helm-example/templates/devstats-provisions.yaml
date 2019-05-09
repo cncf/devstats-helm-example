@@ -80,6 +80,8 @@ spec:
       value: '{{ $root.Values.onlyMetrics }}'
     - name: GHA2DB_FORCE_PERIODS
       value: '{{ $root.Values.periods }}'
+    - name: USE_FLAGS
+      value: '{{ $root.Values.useFlags }}'
     - name: PG_PORT
       value: '5432'
     - name: GHA2DB_GITHUB_OAUTH
