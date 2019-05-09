@@ -63,7 +63,7 @@
 # provisionCommand: './example/vars.sh'
 # provisionCommand: './example/clear_devstats_running_flag.sh'
 # provisionCommand: './example/set_provisioned_flag.sh'
-# provisionCommand: './devel/add_single_metric_all.sh'
+# provisionCommand: './example/add_metric.sh'
 # provisionCommand: 'sleep'
 # provisionCommandArgs:
 #   - "36000"
