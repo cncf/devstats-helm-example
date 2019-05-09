@@ -58,11 +58,12 @@
 # postgresImageName: 'jberkus/simple-patroni:v3'
 # postgresImageName: 'lukaszgryglicki/devstats-patroni'
 # periods: 'd7:t,m:f,q:t,y10:f'
-# provisionCommand: './k8s/repos.sh'
-# provisionCommand: './k8s/affs.sh'
-# provisionCommand: './k8s/vars.sh'
-# provisionCommand: './k8s/clear_devstats_running_flag.sh'
-# provisionCommand: './k8s/set_provisioned_flag.sh'
+# provisionCommand: './example/repos.sh'
+# provisionCommand: './example/affs.sh'
+# provisionCommand: './example/vars.sh'
+# provisionCommand: './example/clear_devstats_running_flag.sh'
+# provisionCommand: './example/set_provisioned_flag.sh'
+# provisionCommand: './devel/add_single_metric_all.sh'
 # provisionCommand: 'sleep'
 # provisionCommandArgs:
 #   - "36000"
