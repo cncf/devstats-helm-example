@@ -127,7 +127,7 @@ Cluster:
 
 UI:
 
-- We are using Grafana 6.1.4, all dashboards, users and datasources are automatically provisioned from JSONs and template files.
+- We are using Grafana 6.1.6, all dashboards, users and datasources are automatically provisioned from JSONs and template files.
 - We're using read-only connection to HA patroni database to take advantage of read-replicas and 3x faster read connections.
 - Grafana is running on plain HTTP and port 3000, ingress controller is responsible for SSL/HTTPS layer.
 
