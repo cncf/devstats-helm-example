@@ -93,6 +93,8 @@ domainName: 'devstats-demo.net'
 fullnameOverride: devstats
 grafanaCommand: 'grafana_start.sh'
 grafanaImage: 'lukaszgryglicki/devstats-grafana'
+grafanaMaxSurge: 1
+grafanaMaxUnavailable: 1
 grafanaNReplicas: 2
 grafanaPodName: devstats-grafana
 grafanaPort: 3000
