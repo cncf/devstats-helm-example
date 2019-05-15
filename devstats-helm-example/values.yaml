@@ -187,3 +187,11 @@ projects:
     cron: '10 * * * *'
     disk: 10Gi
     i: 1
+  - proj: kubeflow
+    db: kubeflow
+    icon: 'kubeflow'
+    org: 'Kubeflow'
+    repo: 'kubeflow/kubeflow'
+    cron: '15 * * * *'
+    disk: 10Gi
+    i: 2
