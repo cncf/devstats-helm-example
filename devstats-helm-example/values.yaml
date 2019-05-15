@@ -192,6 +192,6 @@ projects:
     icon: 'kubeflow'
     org: 'Kubeflow'
     repo: 'kubeflow/kubeflow'
-    cron: '15 * * * *'
+    cron: '40 * * * *'
     disk: 10Gi
     i: 2
