@@ -100,6 +100,7 @@ Final deployments:
 
 - [CNCF](https://cncf.devstats-demo.net).
 - [Prometheus](https://prometheus.devstats-demo.net).
+- [Kubeflow](https://kubeflow.devstats-demo.net).
 
 DevStats data sources:
 
