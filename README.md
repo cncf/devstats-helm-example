@@ -4,6 +4,10 @@ DevStats Deployment on Kubernetes using Helm. This is an example deployment of f
 
 Helm chart in `devstats-helm-example`.
 
+# Adding new projects
+
+See `cncf/devstats-helm-example`:`ADDING_NEW_PROJECTS.md` for informations about how to add more projects.
+
 
 # AWS configuration
 
