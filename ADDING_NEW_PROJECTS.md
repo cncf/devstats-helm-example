@@ -30,6 +30,7 @@
 
 4. Go to `cncf/devstats-helm-example`:
 
+- Update `README.md` - add new project.
 - Update `github.com/cncf/devstats-helm-example/devstats-helm-example/values.yaml` (add project).
 - Now: N - index of the new project added to `github.com/cncf/devstats-helm-example/devstats-helm-example/values.yaml`. M=N+1. Inside `github.com/cncf/devstats-helm-example`:
 - Run `helm install ./devstats-helm --set skipSecrets=1,skipBootstrap=1,skipCrons=1,skipGrafanas=1,skipServices=1,skipPostgres=1,skipIngress=1,indexProvisionsFrom=N,indexProvisionsTo=M,indexPVsFrom=N,indexPVsTo=M` to create provisioning pods.
