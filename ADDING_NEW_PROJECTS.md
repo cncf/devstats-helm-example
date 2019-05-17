@@ -9,7 +9,7 @@
 - Update `./k8s/all_*.txt` or `./example/all_*.txt` or `./gql/all_*.txt` (lists of projects to process).
 
 
-1. Go to `cncf/devstats`:
+2. Go to `cncf/devstats`:
 
 - Do not commit changes until all is ready, or commit with `[no deploy]` in the commit message.
 - Copy setup scripts and then adjust them: `cp -R oldproject/ projectname/`, `vim projectname/*`. Most them can be shared for all projects in `./shared/`, usually only `psql.sh` is project specific.
