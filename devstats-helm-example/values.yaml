@@ -176,7 +176,7 @@ projects:
     icon: 'cncf'
     org: 'CNCF'
     repo: 'cncf/landscapeapp'
-    cron: '25 * * * *'
+    cron: '20 * * * *'
     disk: 30Gi
     i: 0
   - proj: prometheus
@@ -192,6 +192,14 @@ projects:
     icon: 'kubeflow'
     org: 'Kubeflow'
     repo: 'kubeflow/kubeflow'
-    cron: '40 * * * *'
+    cron: '30 * * * *'
     disk: 10Gi
     i: 2
+  - proj: istio
+    db: istio
+    icon: 'istio'
+    org: 'Istio'
+    repo: 'istio/istio'
+    cron: '40 * * * *'
+    disk: 10Gi
+    i: 3
