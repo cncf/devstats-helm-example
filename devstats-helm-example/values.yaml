@@ -127,7 +127,7 @@ name: devstats
 nameOverride: devstats
 oauthSecret: github-oauth
 pgSecret: pg-db
-proivisionImage: 'lukaszgryglicki/devstats'
+provisionImage: 'lukaszgryglicki/devstats-test'
 projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
