@@ -7,6 +7,7 @@
 - For other Helm deployments (like LF or GraphQL) update `k8s/projects.yaml` or `gql/projects.yaml` or `devstats-helm/projects.yaml` file instead of `example/projects.yaml`.
 - Update `./images/build_images.sh` (add project's directory).
 - Update `./k8s/all_*.txt` or `./example/all_*.txt` or `./gql/all_*.txt` or `./devstats-helm/projects.yaml` (lists of projects to process).
+- Update `images/Dockerfile.full.prod` and `images/Dockerfile.full.test` files.
 
 
 2. Go to `cncf/devstats`:
