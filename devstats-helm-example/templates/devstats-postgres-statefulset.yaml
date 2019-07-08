@@ -127,6 +127,17 @@ spec:
           value: '0.0.0.0:5432'
         - name: PATRONI_RESTAPI_LISTEN
           value: '0.0.0.0:8008'
+        - name: PATRONI_POSTGRES_BUFFERS
+          value: '{{ .Values.postgresConfBuffers }}'
+        - name: PATRONI_POSTGRES_MAX_PARALLEL
+          value: '{{ .Values.postgresConfParallel }}'
+        - name: PATRONI_POSTGRES_MAX_WORKERS
+          value: '{{ .Values.postgresConfWorkers }}'
+        - name: PATRONI_POSTGRES_WORK_MEM
+          value: '{{ .Values.postgresConfWorkMem }}'
+        - name: PATRONI_POSTGRES_WAL_BUFFERS
+          value: '{{ .Values.postgresConfWalBuff }}'
+
       terminationGracePeriodSeconds: 0
       nodeSelector:
 {{- with .Values.dbNodeSelector -}}
