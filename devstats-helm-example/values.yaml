@@ -132,6 +132,7 @@ projectsFile: 'example/projects.yaml'
 provisionCommand: './example/deploy_all.sh'
 provisionPodName: devstats-provision
 provisionRestartPolicy: Never
+postgresPort: 5432
 postgresSvcName: 'devstats-postgres'
 postgresImageName: 'lukaszgryglicki/devstats-patroni'
 postgresStorageSize: '100Gi'
